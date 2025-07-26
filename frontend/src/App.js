@@ -3,10 +3,10 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import { 
-  Calendar, TrendingUp, Eye, Heart, MessageCircle, Share2, Clock,
+  Calendar, TrendingUp, Eye, Heart,
   Plus, Save, Upload, Download, Filter, Search, X, Edit, Trash2,
-  CheckCircle, AlertCircle, PlayCircle, PauseCircle, Settings,
-  CalendarDays, BarChart3, Layout, FileText
+  CheckCircle, PlayCircle, Settings,
+  CalendarDays, BarChart3, FileText
 } from 'lucide-react';
 import { apiService } from './services/api';
 
