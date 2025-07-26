@@ -1,0 +1,12 @@
+name = "dpit-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+account_id = "e2357b5052e277c2c4b99d7eb2970e4c"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dpit-content-db"
+database_id = "8cf8c717-de2b-4238-a011-4c40ce9a6027"
+
+[vars]
+ALLOWED_ORIGINS = "http://localhost:3000,https://dpit-content-manager.pages.dev"
