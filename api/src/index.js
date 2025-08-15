@@ -11,12 +11,23 @@ app.use('*', cors({
   origin: (origin) => {
     const allowedOrigins = [
       'http://localhost:3000',
-      'https://dpit-content-manager.pages.dev'
+      'https://dpit-content-manager.pages.dev',
+      // Allow any localhost for development
+      'http://127.0.0.1:3000',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173'
     ];
-    return allowedOrigins.includes(origin) || !origin;
+    if (allowedOrigins.includes(origin)) {
+      return origin;
+    }
+    // Allow requests with no origin (e.g., mobile apps, curl)
+    if (!origin) {
+      return '*';
+    }
+    return false;
   },
   allowHeaders: ['Content-Type', 'Authorization'],
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
 }));
 
 // Health check

@@ -26,6 +26,12 @@ calendarHandler.post('/', async (c) => {
   try {
     const item = await c.req.json();
     
+    // Generate ID if not provided
+    const id = item.id || `${item.day?.toLowerCase().slice(0,3)}-${Date.now()}`;
+    
+    // Handle both contentType and content_type
+    const contentType = item.contentType || item.content_type;
+    
     const sql = `
       INSERT INTO calendar_items 
       (id, day, time, title, content_type, platforms, priority, status, theme, notes)
@@ -33,11 +39,11 @@ calendarHandler.post('/', async (c) => {
     `;
     
     await c.env.DB.prepare(sql).bind(
-      item.id,
+      id,
       item.day,
       item.time,
       item.title,
-      item.contentType,
+      contentType,
       JSON.stringify(item.platforms),
       item.priority || 'medium',
       item.status || 'planned',
@@ -45,9 +51,18 @@ calendarHandler.post('/', async (c) => {
       item.notes || null
     ).run();
     
-    return c.json(item, 201);
+    // Return the item with the generated ID
+    const createdItem = {
+      ...item,
+      id,
+      content_type: contentType,
+      contentType
+    };
+    
+    return c.json(createdItem, 201);
   } catch (error) {
-    return c.json({ error: 'Failed to create calendar item' }, 500);
+    console.error('Calendar creation error:', error);
+    return c.json({ error: 'Failed to create calendar item', details: error.message }, 500);
   }
 });
 
